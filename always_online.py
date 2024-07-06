@@ -13,7 +13,7 @@ def get_ssid():
     return None
 
 def is_connect_internet(testip):
-    status = os.system(u"ping {} -n 8".format(testip))
+    status = os.system(u"ping {} -n 4".format(testip))
     return status == 0
 
 def always_login(username, password, testip, checkinterval):
@@ -31,9 +31,11 @@ def always_login(username, password, testip, checkinterval):
         
 if __name__ == "__main__":
     config = ConfigParser()
-    config.read('config.ini')
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    ini_path = os.path.join(script_dir, 'config.ini')
+    config.read(ini_path)
     username = config['Auth']['username']
     password = config['Auth']['password']
     testip = '114.114.114.114'
-    checkinterval = 5
+    checkinterval = 2*60
     always_login(username, password, testip, checkinterval)
