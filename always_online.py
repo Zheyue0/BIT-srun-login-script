@@ -13,7 +13,7 @@ def get_ssid():
     return None
 
 def is_connect_internet(testip):
-    status = os.system(u"ping {} -n 4".format(testip))
+    status = os.system(u"ping {} -n 2".format(testip))
     return status == 0
 
 def always_login(username, password, testip, checkinterval):
@@ -29,10 +29,18 @@ def always_login(username, password, testip, checkinterval):
                 pass
         time.sleep(checkinterval) 
         
+def get_script_dir():
+    # 获取脚本实际运行的目录
+    if getattr(sys, 'frozen', False):
+        return os.path.dirname(sys.executable)
+    else:
+        return os.path.dirname(os.path.abspath(__file__))
+    
 if __name__ == "__main__":
     config = ConfigParser()
-    script_dir = os.path.dirname(os.path.abspath(__file__))
+    script_dir = get_script_dir()
     ini_path = os.path.join(script_dir, 'config.ini')
+    print(ini_path)
     config.read(ini_path)
     username = config['Auth']['username']
     password = config['Auth']['password']
