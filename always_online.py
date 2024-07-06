@@ -1,5 +1,6 @@
 import os
 import time
+from configparser import ConfigParser
 from BitSrunLogin.LoginManager import LoginManager
 
 def is_connect_internet(testip):
@@ -26,9 +27,10 @@ def always_login(username, password, testip, checkinterval):
                 pass
         
 if __name__ == "__main__":
-    username = "Your srun account name"
-    password = "Your password"
-    testip = "114.114.114.114" # IP to test whether the Internet is connected
-    checkinterval = 5 * 60
-
+    config = ConfigParser()
+    config.read('config.ini')
+    username = config['Auth']['username']
+    password = config['Auth']['password']
+    testip = '114.114.114.114'
+    checkinterval = 1 * 60
     always_login(username, password, testip, checkinterval)
